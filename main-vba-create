@@ -1,0 +1,51 @@
+Sub GerarCertificados()
+'declarar variavel'
+Dim Word As Word.Application
+Dim DOC As Word.Document
+Dim aux As Long
+
+'va a celula E6 até E9'
+For aux = Range("E6").Value To Range("E9").Value
+
+'Abrindo word'
+Set Word = CreateObject("Word.Application")
+Word.Visible = True
+
+'abrindo modelo'
+Set DOC = Word.Documents.Open("C:\Users\diegobayerl\OneDrive\Área de Trabalho\Certificados\modelo.docx")
+
+'No word'
+With DOC
+
+'Substituindo dados'
+.Application.Selection.Find.Text = "#nome"
+.Application.Selection.Find.Execute
+.Application.Selection.Range = Sheets("GerarCertificados").Cells(aux, 1)
+
+.Application.Selection.Find.Text = "#matricula"
+.Application.Selection.Find.Execute
+.Application.Selection.Range = Sheets("GerarCertificados").Cells(aux, 2)
+
+'salvar como'
+.SaveAs ("C:\Users\diegobayerl\OneDrive\Área de Trabalho\Certificados\save\" & Sheets("GerarCertificados").Cells(aux, 1) & ".docx")
+
+'Exporta para pdf'
+.ExportAsFixedFormat OutputFileName:="C:\Users\diegobayerl\OneDrive\Área de Trabalho\Certificados\save\" & Sheets("GerarCertificados").Cells(aux, 3) & ".pdf", _
+                ExportFormat:=wdExportFormatPDF, OpenAfterExport:=False, OptimizeFor:= _
+                wdExportOptimizeForPrint, Range:=wdExportAllDocument, From:=1, To:=1, _
+                Item:=wdExportDocumentContent, IncludeDocProps:=True, KeepIRM:=True, _
+                CreateBookmarks:=wdExportCreateNoBookmarks, DocStructureTags:=True, _
+                BitmapMissingFonts:=True, UseISO19005_1:=False
+'fechar'
+.Close
+Word.Quit
+Set DOC = Nothing
+Set Word = Nothing
+
+End With
+
+Next aux
+
+MsgBox "Certificados gerados com Sucesso!", vbInformation
+
+End Sub
