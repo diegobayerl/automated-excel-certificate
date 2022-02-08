@@ -12,7 +12,7 @@ Set Word = CreateObject("Word.Application")
 Word.Visible = True
 
 'abrindo modelo'
-Set DOC = Word.Documents.Open("C:\Users\diegobayerl\OneDrive\Área de Trabalho\Certificados\modelo.docx")
+Set DOC = Word.Documents.Open("C:\Local do modelo")
 
 'No word'
 With DOC
@@ -27,10 +27,10 @@ With DOC
 .Application.Selection.Range = Sheets("GerarCertificados").Cells(aux, 2)
 
 'salvar como'
-.SaveAs ("C:\Users\diegobayerl\OneDrive\Área de Trabalho\Certificados\save\" & Sheets("GerarCertificados").Cells(aux, 1) & ".docx")
+.SaveAs ("C:\pasta de salvar certificados\" & Sheets("GerarCertificados").Cells(aux, 1) & ".docx")
 
 'Exporta para pdf'
-.ExportAsFixedFormat OutputFileName:="C:\Users\diegobayerl\OneDrive\Área de Trabalho\Certificados\save\" & Sheets("GerarCertificados").Cells(aux, 3) & ".pdf", _
+.ExportAsFixedFormat OutputFileName:="C:\local de salvamento dos certificados\" & Sheets("GerarCertificados").Cells(aux, 3) & ".pdf", _
                 ExportFormat:=wdExportFormatPDF, OpenAfterExport:=False, OptimizeFor:= _
                 wdExportOptimizeForPrint, Range:=wdExportAllDocument, From:=1, To:=1, _
                 Item:=wdExportDocumentContent, IncludeDocProps:=True, KeepIRM:=True, _
